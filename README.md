@@ -21,7 +21,7 @@ $ npm install
 
 ## Desenvolvimento
 
-Para iniciar o servidor web localment execute no seu terminal:
+Para iniciar o servidor web localmente execute no seu terminal:
 
 ```shell
 $ npm run dev
@@ -41,6 +41,8 @@ $ npm run dev
 3. No seu terminal, execute os seguintes comandos:
 
 ```shell
+$ git add .
+$ git commit -m 'deploying'
 $ heroku git:remote -a nome-do-repo-no-heroku
 $ git push heroku master
 ```
