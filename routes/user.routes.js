@@ -112,9 +112,7 @@ router.get(
     try {
       console.log(req.user);
 
-      const result = await User.findOne({ _id: req.user._id }).populate(
-        "books"
-      );
+      const result = await User.findOne({ _id: req.user._id });
 
       res
         .status(200)
