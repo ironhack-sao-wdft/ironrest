@@ -11,10 +11,10 @@ app.use(cors({ origin: process.env.REACT_APP_URL }));
 require("./config/passport.config")(app);
 
 const userRouter = require("./routes/user.routes");
-app.use("/api", userRouter);
+app.use("/", userRouter);
 
 const productRouter = require("./routes/product.routes");
-app.use("/api", productRouter);
+app.use("/", productRouter);
 
 app.listen(Number(process.env.PORT), () =>
   console.log(`Server up and running at port ${process.env.PORT}`)
