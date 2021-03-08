@@ -24,7 +24,8 @@
     "multer-storage-cloudinary": "^4.0.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "slugify": "^1.4.7"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
