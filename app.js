@@ -19,6 +19,9 @@ app.use('/', indexRouter);
 const transactionRouter = require('./routes/transactions.routes');
 app.use('/', transactionRouter);
 
+const productRouter = require("./routes/product.routes");
+app.use("/api", productRouter);
+
 app.listen(Number(process.env.PORT), () =>
 	console.log(`Server up and running at port ${process.env.PORT}`)
 );
