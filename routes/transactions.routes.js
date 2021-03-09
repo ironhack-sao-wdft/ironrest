@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const Stripe = require('stripe');
 
-const stripe = require('stripe')(
+const stripe = new Stripe(
 	'sk_test_51ISkjZJFBujY6d33Vlujj5sxLnWtr8wbFMEvRODn6kaljJ9mgvjUmu7P0sKpKYm7UFAB7LxqWHPQb8xqhwBeE3A000tXzXbKLK'
 );
 
@@ -13,28 +14,23 @@ router.post('/transactions', (req, res) => {
 	res.json('Hello world =]');
 });
 
-router.post('/create-checkout-session', async (req, res) => {
+router.post('/api/charge', async (req, res) => {
+	console.log(req.body);
+	console.log('test');
+	const { id, amount } = req.body;
+
 	try {
-		const session = await stripe.checkout.sessions.create({
-			payment_method_types: ['card'],
-			line_items: [
-				{
-					price_data: {
-						currency: 'usd',
-						product_data: {
-							name: 'T-shirt',
-						},
-						unit_amount: 2000,
-					},
-					quantity: 1,
-				},
-			],
-			mode: 'payment',
-			success_url: 'https://example.com/success',
-			cancel_url: 'https://example.com/cancel',
+		const payment = await stripe.paymentIntents.create({
+			amount,
+			currency: 'USD',
+			description: 'Something',
+			payment_method: id,
+			confirm: true,
 		});
 
-		res.json({ id: session.id });
+		console.log(payment);
+
+		return res.status(200).json({ confirm: 'abc123' });
 	} catch (err) {
 		console.log(err);
 	}
