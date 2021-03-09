@@ -30,7 +30,6 @@
     "passport-local": "^1.0.0",
     "slugify": "^1.4.7",
     "stripe": "^8.137.0"
-
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
