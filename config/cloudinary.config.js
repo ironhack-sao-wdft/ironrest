@@ -12,7 +12,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "petgram",
+    folder: "oddmarket",
     // Na opção format podemos escolher o formato resultante da imagem que será armazenada no Cloudinary
     format: async (req, file) => "png",
     use_filename: true,
