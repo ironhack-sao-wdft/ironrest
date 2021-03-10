@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const Stripe = require('stripe');
-
-const stripe = new Stripe(
+const stripe = require('stripe')(
 	'sk_test_51ISkjZJFBujY6d33Vlujj5sxLnWtr8wbFMEvRODn6kaljJ9mgvjUmu7P0sKpKYm7UFAB7LxqWHPQb8xqhwBeE3A000tXzXbKLK'
 );
 
@@ -34,6 +32,18 @@ router.post('/api/charge', async (req, res) => {
 	} catch (err) {
 		console.log(err);
 	}
+});
+
+router.post('/create-checkout-session', async (req, res) => {
+	const session = await stripe.checkout.sessions.create({
+		payment_method_types: ['card'],
+		line_items: req.body,
+		mode: 'payment',
+		success_url: 'https://example.com/success',
+		cancel_url: 'https://example.com/cancel',
+	});
+
+	res.json({ id: session.id });
 });
 
 module.exports = router;

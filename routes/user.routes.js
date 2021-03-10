@@ -15,7 +15,7 @@ const User = require("../models/User");
 router.post("/signup", async (req, res) => {
   // 1. Extrair o email, nome e senha do usuario do corpo da requisição
 
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
 
   // 2. Validar o email e a senha
 
@@ -58,7 +58,7 @@ router.post("/signup", async (req, res) => {
     const passwordHash = await bcrypt.hash(password, salt);
 
     // 4. Salvar o email e a senha criptografada no banco
-    const result = await User.create({ email, name, passwordHash });
+    const result = await User.create({ email, name, passwordHash, role });
 
     console.log(result);
 
