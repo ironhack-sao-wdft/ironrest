@@ -80,4 +80,21 @@ router.get('/transaction/:id', async (req, res) => {
 	}
 });
 
+router.get('/user/transactions/:id', async (req, res) => {
+	try {
+		const transactions = await User.findOne({ _id: req.params.id })
+			.populate({ path: 'transactions', populate: { path: 'products' } })
+			.populate('products');
+		console.log(transactions);
+
+		if (!transactions) {
+			return res.status(404).json({ msg: 'Review not found' });
+		}
+
+		return res.status(200).send(transactions);
+	} catch (err) {
+		return res.status(500).json({ msg: err });
+	}
+});
+
 module.exports = router;
