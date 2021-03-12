@@ -65,16 +65,27 @@ router.get('/transaction/:id', async (req, res) => {
 		console.log("hey it's get");
 		const transaction = await Transaction.find();
 
-		// 		// O findOne() traz a primeira ocorrência do resultado da consulta
-		// 		const product = await Product.findOne({ _id: req.params.id });
-		// 		console.log(product);
-
-		// 		// Se o findOne() retornar null, ou seja, não encontrar o pet no banco, retornamos um 404 dizendo que não encontramos o pet
-		// 		if (!product) {
-		// 			return res.status(404).json({ msg: 'Product not found' });
-		// 		}
-
 		return res.status(200).json(transaction);
+	} catch (err) {
+		return res.status(500).json({ msg: err });
+	}
+});
+
+router.get('/user/transactions/:id', async (req, res) => {
+	try {
+		const transactions = await User.findOne({ _id: req.params.id })
+			.populate({
+				path: 'transactions',
+				populate: { path: 'products', populate: { path: 'item' } },
+			})
+			.populate('products');
+		console.log(transactions);
+
+		if (!transactions) {
+			return res.status(404).json({ msg: 'Review not found' });
+		}
+
+		return res.status(200).send(transactions);
 	} catch (err) {
 		return res.status(500).json({ msg: err });
 	}
