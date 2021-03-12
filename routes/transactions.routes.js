@@ -12,9 +12,8 @@ router.post('/create-checkout-session', async (req, res) => {
 		payment_method_types: ['card'],
 		line_items: req.body.products,
 		mode: 'payment',
-		success_url:
-			'https://oddmarket.netlify.app/order/sucess/{CHECKOUT_SESSION_ID}',
-		cancel_url: 'https://oddmarket.netlify.app/order/canceled',
+		success_url: 'hhttp://localhost:3000//order/sucess/{CHECKOUT_SESSION_ID}',
+		cancel_url: 'http://localhost:3000//order/canceled',
 		client_reference_id: req.body.id,
 	});
 
