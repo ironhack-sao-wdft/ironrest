@@ -1,53 +1,27 @@
-![logo_ironhack_blue 7](https://user-images.githubusercontent.com/23629340/40541063-a07a0a8a-601a-11e8-91b5-2f13e4e6b441.png)
+<img alt="OddMarket Logo" src="https://github.com/LBWKH/OddMarket---Server/blob/master/public/images/logoWrittenOrange.png" width="300px"/>
 
-# IronREST Boilerplate
+## This is the server side of **OddMarket**, our 3rd project for Ironhack's Web Development Bootcamp
 
-Esse boilerplate para API RESTful já inclui:
+OddMarket is an ecommerce mockup that sells products that are slightly *peculiar*, or in other words, that nobody ever asked for. It uses Stripe's payment API in order to be able to simulate a real transaction.
 
-- Autenticação por tokens JWT usando o Passport
-- Conexão com banco de dados MongoDB usando Mongoose
-- Servidor Web usando Express pré-configurado com CORS e aceitando requisições JSON e Multipart Form
-- Upload de arquivos usando Cloudinary e Multer
+## Deploy
 
-## Para Começar
+Check out our deployed app [here](https://oddmarket.netlify.app)
 
-- Faça o fork e clone deste repositório
+## Authors
 
-## Instalação
+- [Leonard Kim Her](https://github.com/LBWKH)
+- [Felipe Freitas](https://github.com/sincopeiro)
+- [Matheus Ciappina](https://github.com/mciappina)
 
-```shell
-$ npm install
-```
+## Presentation Slides
 
-## Desenvolvimento
+[Google Slides](https://docs.google.com/presentation/d/1d7XnHfum8TtoYDmu1JaCfFW9EJYa_txjmPI7AjNWrMg/edit?usp=sharing)
 
-Para iniciar o servidor web localmente execute no seu terminal:
+## Client Repository
 
-```shell
-$ npm run dev
-```
+Check out the client's repository [here](https://github.com/LBWKH/OddMarket---Client)
 
-## Deploy do MongoDB
+## Disclaimer
 
-1. Faça login no https://account.mongodb.com/account/login?nds=true
-2. Crie um cluster gratuito
-3. Siga as instruções e obtenha a string de conexão com o banco
-4. Crie uma variável de ambiente MONGODB_URI no Heroku com a string de conexão copiada do Atlas
-
-## Deploy no Heroku
-
-1. Faça login no Heroku e selecione seu repositório
-2. Habilite 'automatic deploys'
-3. No seu terminal, execute os seguintes comandos:
-
-```shell
-$ git add .
-$ git commit -m 'deploying'
-$ heroku git:remote -a nome-do-repo-no-heroku
-$ git push heroku master
-```
-
-4. Adicione uma variável de ambiente no Heroku para cada variável de ambiente presente no arquivo .env (não precisa criar a PORT no Heroku)
-5. Adicione a URL da sua API hospedada no Heroku nas variáveis de ambiente do app React no Netlify
-
-Happy coding! 💙
+OddMarket is a project solely for educational purposes, developed for the 3rd project of Ironhack's Web Development Bootcamp, hence the use of all of its resources do not constitute or mean any copyright infringement. All credits for the images utilized are given to the proper authors Matty Benedetto, aka @unnecessaryinventions, and Katerina Kamprani, aka the author of The Unfomcortable.
