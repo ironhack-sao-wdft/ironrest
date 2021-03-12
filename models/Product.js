@@ -7,7 +7,6 @@ const ProductSchema = mongoose.Schema({
     description: {type: String, required: true},
     price: {type: Number, required: true, min: 0.01},
     quantity: {type: Number, required: false, default: 1},
-    transactions: {type: mongoose.Schema.Types.ObjectId, ref: "Transaction", required: false}
 })
 
 const ProductModel = mongoose.model("Product", ProductSchema);
