@@ -1,127 +1,119 @@
 const router = require("express").Router();
-const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-const passport = require("passport");
-const jwt = require("jsonwebtoken");
 
-const User = require("../models/User");
+const UserModel = require("../models/User.model");
+const generateToken = require("../config/jwt.config");
+const isAuthenticated = require("../middlewares/isAuthenticated");
+const attachCurrentUser = require("../middlewares/attachCurrentUser");
 
-// REST => REpresentational State Transfer
+const salt_rounds = 10;
 
-// HTTP é stateless
-
-// RESTful é uma API que segue todas as regras do REST
-
+// Crud (CREATE) - HTTP POST
+// Criar um novo usuário
 router.post("/signup", async (req, res) => {
-  // 1. Extrair o email, nome e senha do usuario do corpo da requisição
+  // Requisições do tipo POST tem uma propriedade especial chamada body, que carrega a informação enviada pelo cliente
+  console.log(req.body);
 
-  const { name, email, password } = req.body;
-
-  // 2. Validar o email e a senha
-
-  const errors = {};
-  // Validacao de nome de usuario: é obrigatório, tem que ser do tipo string e não pode ter mais de 50 caracteres
-  if (!name || typeof name !== "string" || name.length > 50) {
-    errors.name = "Username is required and should be 50 characters max.";
-  }
-
-  // Tem que ser um email valido, é obrigatório
-  if (!email || !email.match(/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/)) {
-    errors.email = "Email is required and should be a valid email address";
-  }
-
-  // Senha é obrigatória, precisa ter no mínimo 8 caracteres, precisa ter letras maiúsculas, minúsculas, números e caracteres especiais
-  if (
-    !password ||
-    !password.match(
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
-    )
-  ) {
-    errors.password =
-      "Password is required, should be at least 8 characters long, should contain an uppercase letter, lowercase letter, a number and a special character";
-  }
-
-  // Se o objeto errors tiver propriedades (chaves), retorne as mensagens de erro
-  if (Object.keys(errors).length) {
-    return res.status(400).json({ errors });
-  }
-
-  // 3. Criptografar a senha
   try {
-    // Gerar o salt
+    // Recuperar a senha que está vindo do corpo da requisição
+    const { password } = req.body;
 
-    const saltRounds = 10;
+    // Verifica se a senha não está em branco ou se a senha não é complexa o suficiente
+    if (
+      !password ||
+      !password.match(
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
+      )
+    ) {
+      // O código 400 significa Bad Request
+      return res.status(400).json({
+        msg: "Password is required and must have at least 8 characters, uppercase and lowercase letters, numbers and special characters.",
+      });
+    }
 
-    const salt = await bcrypt.genSalt(saltRounds);
+    // Gera o salt
+    const salt = await bcrypt.genSalt(salt_rounds);
 
-    // "Embaralhar" a senha enviada pelo usuário antes de salvar no banco
-    const passwordHash = await bcrypt.hash(password, salt);
+    // Criptografa a senha
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-    // 4. Salvar o email e a senha criptografada no banco
-    const result = await User.create({ email, name, passwordHash });
+    // Salva os dados de usuário no banco de dados (MongoDB) usando o body da requisição como parâmetro
+    const result = await UserModel.create({
+      ...req.body,
+      passwordHash: hashedPassword,
+    });
 
-    console.log(result);
-
+    // Responder o usuário recém-criado no banco para o cliente (solicitante). O status 201 significa Created
     return res.status(201).json(result);
   } catch (err) {
     console.error(err);
-    // Mensagem de erro para exibir erros de validacao do Schema do Mongoose
-    if (err instanceof mongoose.Error.ValidationError) {
-      res.status(400).json({ error: err.message });
-    } else if (err.code === 11000) {
-      res.status(400).json({
-        error:
-          "Name and email need to be unique. Either username or email is already used.",
+    // O status 500 signifca Internal Server Error
+    return res.status(500).json({ msg: JSON.stringify(err) });
+  }
+});
+
+// Login
+router.post("/login", async (req, res) => {
+  try {
+    // Extraindo o email e senha do corpo da requisição
+    const { email, password } = req.body;
+
+    // Pesquisar esse usuário no banco pelo email
+    const user = await UserModel.findOne({ email });
+
+    console.log(user);
+
+    // Se o usuário não foi encontrado, significa que ele não é cadastrado
+    if (!user) {
+      return res
+        .status(400)
+        .json({ msg: "This email is not yet registered in our website;" });
+    }
+
+    // Verificar se a senha do usuário pesquisado bate com a senha recebida pelo formulário
+
+    if (await bcrypt.compare(password, user.passwordHash)) {
+      // Gerando o JWT com os dados do usuário que acabou de logar
+      const token = generateToken(user);
+
+      return res.status(200).json({
+        user: {
+          name: user.name,
+          email: user.email,
+          _id: user._id,
+          role: user.role,
+        },
+        token,
       });
+    } else {
+      // 401 Significa Unauthorized
+      return res.status(401).json({ msg: "Wrong password or email" });
     }
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ msg: JSON.stringify(err) });
   }
 });
 
-// Next é uma função que passa algum valor para o próximo handler de rotas (do Express) da cadeia de handlers
-router.post("/login", (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    // O objeto err só existe em caso de erro na comunicação com o Mongo
-    if (err) {
-      return res.status(500).json({ msg: err });
+// cRud (READ) - HTTP GET
+// Buscar dados do usuário
+router.get("/profile", isAuthenticated, attachCurrentUser, (req, res) => {
+  console.log(req.headers);
+
+  try {
+    // Buscar o usuário logado que está disponível através do middleware attachCurrentUser
+    const loggedInUser = req.currentUser;
+
+    if (loggedInUser) {
+      // Responder o cliente com os dados do usuário. O status 200 significa OK
+      return res.status(200).json(loggedInUser);
+    } else {
+      return res.status(404).json({ msg: "User not found." });
     }
-
-    // Caso este email não esteja cadastrado ou a senha esteja divergente
-    if (!user || info) {
-      return res.status(401).json({ msg: info.message });
-    }
-
-    req.login(user, { session: false }, (err) => {
-      if (err) {
-        console.error(err);
-        return next(err);
-      }
-
-      const { name, email, _id } = user;
-      const userObj = { name, email, _id };
-      const token = jwt.sign({ user: userObj }, process.env.TOKEN_SIGN_SECRET);
-
-      return res.status(200).json({ user: userObj, token });
-    });
-  })(req, res, next);
-});
-
-router.get(
-  "/profile",
-  passport.authenticate("jwt", { session: false }),
-  async (req, res) => {
-    try {
-      console.log(req.user);
-
-      const result = await User.findOne({ _id: req.user._id });
-
-      res
-        .status(200)
-        .json({ message: "This is a protected route", user: result });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ msg: err });
-    }
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ msg: JSON.stringify(err) });
   }
-);
+});
 
 module.exports = router;
