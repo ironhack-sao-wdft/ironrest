@@ -1,16 +1,16 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 
-const UserModel = require("../models/User.model");
+const EstabModel = require("../models/Estab.model");
 const generateToken = require("../config/jwt.config");
 const isAuthenticated = require("../middlewares/isAuthenticated");
-const attachCurrentUser = require("../middlewares/attachCurrentUser");
+const attachCurrentEstab = require("../middlewares/attachCurrentEstab");
 
 const salt_rounds = 10;
 
 // Crud (CREATE) - HTTP POST
 // Criar um novo usuário
-router.post("/signup", async (req, res) => {
+router.post("/signup_estab", async (req, res) => {
   // Requisições do tipo POST tem uma propriedade especial chamada body, que carrega a informação enviada pelo cliente
   console.log(req.body);
 
@@ -38,7 +38,7 @@ router.post("/signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Salva os dados de usuário no banco de dados (MongoDB) usando o body da requisição como parâmetro
-    const result = await UserModel.create({
+    const result = await EstabModel.create({
       ...req.body,
       passwordHash: hashedPassword,
     });
@@ -53,13 +53,13 @@ router.post("/signup", async (req, res) => {
 });
 
 // Login
-router.post("/login", async (req, res) => {
+router.post("/login_estab", async (req, res) => {
   try {
     // Extraindo o email e senha do corpo da requisição
     const { email, password } = req.body;
 
     // Pesquisar esse usuário no banco pelo email
-    const user = await UserModel.findOne({ email });
+    const user = await EstabModel.findOne({ email });
 
     console.log(user);
 
@@ -78,7 +78,7 @@ router.post("/login", async (req, res) => {
 
       return res.status(200).json({
         user: {
-          name: user.name,
+          nameEstab: user.name,
           email: user.email,
           _id: user._id,
           role: user.role,
@@ -97,11 +97,11 @@ router.post("/login", async (req, res) => {
 
 // cRud (READ) - HTTP GET
 // Buscar dados do usuário
-router.get("/profile", isAuthenticated, attachCurrentUser, (req, res) => {
+router.get("/profile_estab", isAuthenticated, attachCurrentEstab, (req, res) => {
   console.log(req.headers);
 
   try {
-    // Buscar o usuário logado que está disponível através do middleware attachCurrentUser
+    // Buscar o usuário logado que está disponível através do middleware attachCurrentEstab
     const loggedInUser = req.currentUser;
 
     if (loggedInUser) {
@@ -117,15 +117,15 @@ router.get("/profile", isAuthenticated, attachCurrentUser, (req, res) => {
 });
 
 // crUd (UPDATE) - HTTP PUT
-// Buscar dados do usuário e depois atualiza
+// Buscar dados do estabelecimento e depois atualiza
 router.put(
-  "/profile",
+  "/profile_estab",
   isAuthenticated,
-  attachCurrentUser,
+  attachCurrentEstab,
   async (req, res) => {
     try {
-      // Buscar o usuário logado que está disponível através do middleware attachCurrentUser
-      const loggedInUser = req.currentUser;
+      // Buscar o usuário logado que está disponível através do middleware attachCurrentEstab
+      const loggedInEstab = req.currentUser;
 
       if (req.body.password) {
         return res.status(400).json({
@@ -133,8 +133,8 @@ router.put(
         });
       }
 
-      const updatedUser = await UserModel.findOneAndUpdate(
-        { _id: loggedInUser._id },
+      const updatedUser = await EstabModel.findOneAndUpdate(
+        { _id: loggedInEstab._id },
         { $set: { ...req.body } },
         { new: true }
       );

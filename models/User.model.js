@@ -10,12 +10,20 @@ const UserSchema = new Schema({
     lowercase: true,
   },
   passwordHash: { type: String, required: true },
-  role: {
-    type: String,
-    enum: ["ADMIN", "USER"],
-    required: true,
-    default: "USER",
-  },
+  fotoUrl: { type: String, trim: true },
+  telefone: { type: String, trim: true },
+  instagramUrl: { type: String, trim: true },
+  rua: { type: String },
+  bairro: { type: String },
+  cidade: { type: String },
+  numero: { type: String },
+  estado: { type: String },
+  rank: { type: Number, trim: true, max: 5, min: 0 },
+  documento: { type: Number, trim: true },
+  dataDeNascimento: { type: Date, trim: true },
+  disponivel: { type: String, enum: ["Sim", "Não", "Outro"] },
+  formaDePagamento: { type: String, enum: ["Cartão", "Dinheiro", "PIX"] },
+  reservaId: [{ type: Schema.Types.ObjectId, ref: "Reserva" }], 
 });
 
 const UserModel = model("User", UserSchema);
