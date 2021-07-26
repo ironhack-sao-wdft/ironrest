@@ -2,6 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const UserSchema = new Schema({
   name: { type: String, required: true, trim: true },
+  lastName: { type: String, required: true, trim: true },
   email: {
     type: String,
     required: true,
@@ -10,12 +11,17 @@ const UserSchema = new Schema({
     lowercase: true,
   },
   passwordHash: { type: String, required: true },
-  role: {
+  image: {
     type: String,
-    enum: ["ADMIN", "USER"],
-    required: true,
-    default: "USER",
+    default: (src =
+      "https://res.cloudinary.com/dbthudmai/image/upload/v1602808218/defaultAvatar_iebqlk.png"),
   },
+  posts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+    },
+  ],
 });
 
 const UserModel = model("User", UserSchema);
