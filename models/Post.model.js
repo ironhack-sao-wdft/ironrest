@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const { Schema, model } = require("mongoose");
 
 const PostSchema = new Schema(
@@ -13,7 +14,17 @@ const PostSchema = new Schema(
       trim: true,
       required: [true],
     },
-
+    tripCost: String,
+    pros: {
+      type: String,
+      lowercase: true,
+      trim: true,
+    },
+    cons: {
+      type: String,
+      lowercase: true,
+      trim: true,
+    },
     comments: [
       {
         type: Schema.Types.ObjectId,
