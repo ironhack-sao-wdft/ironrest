@@ -4,7 +4,7 @@
 
 Esse boilerplate para API RESTful já inclui:
 
-- Autenticação por tokens JWT usando o Passport
+- Autenticação por tokens JWT
 - Conexão com banco de dados MongoDB usando Mongoose
 - Servidor Web usando Express pré-configurado com CORS e aceitando requisições JSON e Multipart Form
 - Upload de arquivos usando Cloudinary e Multer
