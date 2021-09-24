@@ -3,11 +3,11 @@ const router = require("express").Router();
 
 const ProductModel = require("../models/Product.model");
 // const isAdmin = require("../middlewares/isAdmin");
-// const isAuthenticated = require("../middlewares/isAuthenticated");
+const isAuthenticated = require("../middlewares/isAuthenticated");
 // const attachCurrentUser = require("../middlewares/attachCurrentUser");
 
 // Crud (CREATE) - HTTP POST: Criar um novo produto
-router.post("/product", async (req, res, next) => {
+router.post("/product", isAuthenticated, async (req, res, next) => {
   try {
     const product = await ProductModel.create(req.body);
     return res.status(201).json(product);
