@@ -10,7 +10,7 @@ const ProductSchema = new Schema({
   },
   price: { type: Number, min: 0, required: true },
   supplier: { type: String },
-  quantityInvetory: { type: Number, min: 0 },
+  Invetory: { type: Number, min: 0 },
 });
 
 const ProductModel = model("Product", ProductSchema);
