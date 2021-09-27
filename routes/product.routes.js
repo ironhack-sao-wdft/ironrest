@@ -89,6 +89,7 @@ router.delete(
     } catch (err) {
       return next(err);
     }
+    z;
   }
 );
 
