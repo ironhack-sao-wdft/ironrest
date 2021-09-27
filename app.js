@@ -19,6 +19,9 @@ app.use((err, req, res, next) => {
 
 const userRouter = require("./routes/user.routes");
 app.use("/api", userRouter);
+// Criando a rota pra pedidos
+const orderRouter = require("./routes/order.routes")
+app.use("/api/order", orderRouter)
 
 // import do router de products
 const productRouter = require("./routes/product.routes");
