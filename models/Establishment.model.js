@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const { Schema, model } = require("mongoose");
 
 const EstablishmentSchema = new Schema({
     name: {
@@ -19,8 +18,15 @@ const EstablishmentSchema = new Schema({
         unique: true,
         trim: true
     },
-    openingHours: {
+    openingTime: {
         type: String,
+        validate: /^([01]?\d|2[0-3]):([0-5]\d):([0-5]\d)$/,
+        required: true,
+        trim: true
+    },
+    closingTime: {
+        type: String,
+        validate: /^([01]?\d|2[0-3]):([0-5]\d):([0-5]\d)$/,
         required: true,
         trim: true
     },

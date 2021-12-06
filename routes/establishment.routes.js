@@ -14,7 +14,7 @@ const EstablishmentModel = require("../models/Establishment.model");
 // CRUD
 
 // Crud Create (POST)
-router.post("/establishment", async (req, res) => {
+router.post("/establishment",isAuthenticated, async (req, res) => {
   try {
     console.log(req.body);
 
