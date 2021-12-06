@@ -55,43 +55,18 @@ router.post("/signup", async (req, res) => {
 // Login
 router.post("/login", async (req, res) => {
   try {
-    // Extraindo o email e senha do corpo da requisição
     const { email, password } = req.body;
-
-    // Pesquisar esse usuário no banco pelo email
-    const user = await UserModel.findOne({ email });
-
-    console.log(user);
-
-    // Se o usuário não foi encontrado, significa que ele não é cadastrado
-    if (!user) {
-      return res
-        .status(400)
-        .json({ msg: "This email is not yet registered in our website;" });
+    const foundUser = await UserModel.findOne({ email });
+    if (!foundUser) {
+      return res.status(400).json({ msg: "E-mail ou senha incorretos." });
     }
-
-    // Verificar se a senha do usuário pesquisado bate com a senha recebida pelo formulário
-
-    if (await bcrypt.compare(password, user.passwordHash)) {
-      // Gerando o JWT com os dados do usuário que acabou de logar
-      const token = generateToken(user);
-
-      return res.status(200).json({
-        user: {
-          name: user.name,
-          email: user.email,
-          _id: user._id,
-          role: user.role,
-        },
-        token,
-      });
-    } else {
-      // 401 Significa Unauthorized
-      return res.status(401).json({ msg: "Wrong password or email" });
+    if (!bcrypt.compareSync(password, foundUser.passwordHash)) {
+      return res.status(400).json({ msg: "E-mail ou senha incorretos." });
     }
+    const token = generateToken(foundUser);
+    res.status(200).json(token);
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ msg: JSON.stringify(err) });
+    console.log(err);
   }
 });
 
