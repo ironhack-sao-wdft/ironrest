@@ -19,6 +19,12 @@ Esse boilerplate para API RESTful já inclui:
 $ npm install
 ```
 
+> :warning: **IMPORTANTE**: O arquivo `.env` está comentado no `.gitignore` por motivos didáticos. Antes de fazer seu primeiro commit, retire o comentário (`#`) do `.gitignore` na linha onde está escrito `.env` e execute o seguinte comando (esse comando deleta o arquivo do histórico de commits do Git):
+
+```shell
+$ git rm -r --cached
+```
+
 ## Desenvolvimento
 
 Para iniciar o servidor web localmente execute no seu terminal:
