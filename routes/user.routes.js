@@ -76,7 +76,7 @@ router.get("/profile", isAuthenticated, attachCurrentUser, (req, res) => {
 
   try {
     // Buscar o usuário logado que está disponível através do middleware attachCurrentUser
-    const loggedInUser = req.currentUser;
+    const loggedInUser = user;
 
     if (loggedInUser) {
       // Responder o cliente com os dados do usuário. O status 200 significa OK
@@ -89,5 +89,29 @@ router.get("/profile", isAuthenticated, attachCurrentUser, (req, res) => {
     return res.status(500).json({ msg: JSON.stringify(err) });
   }
 });
+
+router.delete(
+  "/profile/delete",
+  isAuthenticated,
+  attachCurrentUser,
+  async (req, res) => {
+    console.log(req.headers);
+
+    try {
+      // Buscar o usuário logado que está disponível através do middleware attachCurrentUser
+      const loggedInUser = await UserModel.deleteOne({ _id: req.currentUser });
+
+      if (loggedInUser) {
+        // Responder o cliente com os dados do usuário. O status 200 significa OK
+        return res.status(200).json(loggedInUser);
+      } else {
+        return res.status(404).json({ msg: "Usuário não encontrado" });
+      }
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ msg: JSON.stringify(err) });
+    }
+  }
+);
 
 module.exports = router;

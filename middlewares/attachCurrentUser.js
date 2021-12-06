@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
 
     if (!user) {
       // 400 significa Bad Request
-      return res.status(400).json({ msg: "User does not exist." });
+      return res.status(400).json({ msg: "Usuário não existe." });
     }
 
     req.currentUser = user;
