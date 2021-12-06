@@ -12,10 +12,11 @@ const UserSchema = new Schema({
   passwordHash: { type: String, required: true },
   role: {
     type: String,
-    enum: ["ADMIN", "USER"],
+    enum: ["DELIVERYPERSON", "USER", "ADMIN"],
     required: true,
     default: "USER",
   },
+  estabilishments: [],
 });
 
 const UserModel = model("User", UserSchema);
