@@ -72,11 +72,10 @@ router.post("/login", async (req, res) => {
 // cRud (READ) - HTTP GET
 // Buscar dados do usuário
 router.get("/profile", isAuthenticated, attachCurrentUser, (req, res) => {
-  console.log(req.headers);
 
   try {
     // Buscar o usuário logado que está disponível através do middleware attachCurrentUser
-    const loggedInUser = user;
+    const loggedInUser = req.currentUser;
 
     if (loggedInUser) {
       // Responder o cliente com os dados do usuário. O status 200 significa OK
