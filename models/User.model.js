@@ -14,7 +14,7 @@ const UserSchema = new Schema({
     type: String,
     enum: ["DELIVERYPERSON", "USER", "ADMIN"],
     required: true,
-    default: "USER",
+    default: "user",
   },
   estabilishments: [],
 });
