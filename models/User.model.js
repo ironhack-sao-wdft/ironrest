@@ -17,7 +17,7 @@ const UserSchema = new Schema({
     default: "USER",
   },
   favorites: [{ type: String }],
-  blockeds: [{ type: String }],
+  blockedActivities: [{ type: String }],
 });
 
 const UserModel = model("User", UserSchema);
