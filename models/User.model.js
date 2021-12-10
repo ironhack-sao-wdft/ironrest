@@ -18,6 +18,7 @@ const UserSchema = new Schema({
   },
   favorites: [{ type: String }],
   blockedActivities: [{ type: String }],
+  publishedActivities: [{ type: mongoose.Types.ObjectId, ref: "Activity" }],
 });
 
 const UserModel = model("User", UserSchema);
