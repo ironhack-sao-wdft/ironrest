@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
 const UserSchema = new Schema({
   name: { type: String, required: true, trim: true },
@@ -19,6 +20,7 @@ const UserSchema = new Schema({
   favorites: [{ type: String }],
   blockedActivities: [{ type: String }],
   publishedActivities: [{ type: mongoose.Types.ObjectId, ref: "Activity" }],
+  pictureURL: { type: String, trim: true },
 });
 
 const UserModel = model("User", UserSchema);
