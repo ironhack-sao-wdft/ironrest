@@ -1,12 +1,10 @@
 const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
 const ActivitySchema = new Schema({
-  name: { type: String, required: true, trim: true },
+  name: { type: String, required: true, unique: true, trim: true },
   creatorName: { type: String, required: true, trim: true },
-  type: {
-    required: true,
-    enum: ["outdoors", "indoors"],
-  },
+  type: { type: String, required: true, enum: ["outdoors", "indoors"] },
   description: { type: String, required: true, trim: true },
   instructions: { type: String, required: true, trim: true },
   usesMedia: {

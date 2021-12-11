@@ -10,31 +10,36 @@ const salt_rounds = 10;
 
 // cRud (READ) - HTTP GET
 // Buscar todas as atividades
-router.get("/activities", isAuthenticated, attachCurrentUser, (req, res) => {
-  console.log(req.headers);
+router.get(
+  "/activities",
+  isAuthenticated,
+  attachCurrentUser,
+  async (req, res) => {
+    console.log(req.headers);
 
-  try {
-    // Buscar o usuário logado que está disponível através do middleware attachCurrentUser
-    const loggedInUser = req.currentUser;
+    try {
+      // Buscar o usuário logado que está disponível através do middleware attachCurrentUser
+      const loggedInUser = req.currentUser;
 
-    if (loggedInUser) {
-      // Responder o cliente com os dados do usuário. O status 200 significa OK
-      return res.status(200).json(await ActivityModel.find());
-    } else {
-      return res.status(404).json({ msg: "Atividades não encontradas." });
+      if (loggedInUser) {
+        // Responder o cliente com os dados do usuário. O status 200 significa OK
+        return res.status(200).json(await ActivityModel.find());
+      } else {
+        return res.status(404).json({ msg: "Atividades não encontradas." });
+      }
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ msg: JSON.stringify(err) });
     }
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ msg: JSON.stringify(err) });
   }
-});
+);
 
 // Pega os dados de uma atividade específica
 router.get(
   "/activities/:id",
   isAuthenticated,
   attachCurrentUser,
-  (req, res) => {
+  async (req, res) => {
     console.log(req.headers);
 
     try {
@@ -57,30 +62,35 @@ router.get(
 );
 
 // Cria uma atividade nova
-router.post("/activities", async (req, res) => {
-  try {
-    // Extrair as informações do corpo da requisição
+router.post(
+  "/activities",
+  isAuthenticated,
+  attachCurrentUser,
+  async (req, res) => {
+    try {
+      // Extrair as informações do corpo da requisição
 
-    console.log(req.body);
+      console.log(req.body);
 
-    // Inserir no banco
-    const result = await ActivityModel.create(req.body);
+      // Inserir no banco
+      const result = await ActivityModel.create(req.body);
 
-    // Responder a requisição
-    // Pela regra do REST, a resposta de uma inserção deve contar o registro recém-inserido com status 201
-    res.status(201).json(result);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
+      // Responder a requisição
+      // Pela regra do REST, a resposta de uma inserção deve contar o registro recém-inserido com status 201
+      res.status(201).json(result);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
   }
-});
+);
 
 // Edita uma atividade específica
 router.patch(
   "/activities/:id",
   isAuthenticated,
   attachCurrentUser,
-  (req, res) => {
+  async (req, res) => {
     console.log(req.headers);
 
     try {
