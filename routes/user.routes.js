@@ -84,6 +84,7 @@ router.post("/login", async (req, res) => {
           role: user.role,
           favorites: user.favorites,
           blockedActivities: user.blockedActivities,
+          publishedActivities: user.publishedActivities,
         },
         token,
       });
