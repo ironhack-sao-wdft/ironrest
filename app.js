@@ -12,8 +12,10 @@ app.use(morgan("dev"));
 app.use(cors({ origin: process.env.REACT_APP_URL }));
 
 const userRouter = require("./routes/user.routes");
+const activityRouter = require("./routes/Activity.routes");
 app.use("/api", userRouter);
+app.use("/api", activityRouter);
 
 app.listen(Number(process.env.PORT), () =>
-  console.log(`Server up and running at port ${process.env.PORT}`)
+  console.log(`Servidor subiu na porta ${process.env.PORT}`)
 );
