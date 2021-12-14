@@ -20,7 +20,12 @@ const UserSchema = new Schema({
   favorites: [{ type: String }],
   blockedActivities: [{ type: String }],
   publishedActivities: [{ type: mongoose.Types.ObjectId, ref: "Activity" }],
-  pictureURL: { type: String, trim: true },
+  pictureURL: {
+    type: String,
+    trim: true,
+    default:
+      "https://res.cloudinary.com/igor-stefano/image/upload/v1639502605/pause_ocy3pw.png",
+  },
 });
 
 const UserModel = model("User", UserSchema);
