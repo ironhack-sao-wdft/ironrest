@@ -85,6 +85,7 @@ router.post("/login", async (req, res) => {
           favorites: user.favorites,
           blockedActivities: user.blockedActivities,
           publishedActivities: user.publishedActivities,
+          pictureURL: user.pictureURL,
         },
         token,
       });

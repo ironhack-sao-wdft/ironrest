@@ -12,9 +12,9 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "pictures", // Aqui você pode escolher o nome da pasta que irá armazenar seus arquivos no Cloudinary
+    folder: "pause", // Aqui você pode escolher o nome da pasta que irá armazenar seus arquivos no Cloudinary
     // Na opção format podemos escolher o formato resultante da imagem que será armazenada no Cloudinary
-    format: async (req, file) => "png",
+    format: async (req, file) => "mp4",
     use_filename: true,
   },
 });

@@ -6,7 +6,11 @@ const generateToken = require("../config/jwt.config");
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
 
+const uploader = require("../config/cloudinary.config");
+
 const salt_rounds = 10;
+
+router.post("/upload", uploader.single("photo"));
 
 // cRud (READ) - HTTP GET
 // Buscar todas as atividades
