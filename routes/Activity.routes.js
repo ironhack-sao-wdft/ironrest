@@ -1,7 +1,6 @@
 const router = require("express").Router();
 
 const ActivityModel = require("../models/Activity.model");
-const generateToken = require("../config/jwt.config");
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
 const isAdmin = require("../middlewares/isAdmin");
@@ -11,7 +10,7 @@ const uploader = require("../config/cloudinary.config");
 router.post(
   "/upload",
   isAuthenticated,
-  uploader.single("video"),
+  uploader.single("media"),
   (req, res) => {
     if (!req.file) {
       return res.status(500).json({ msg: "Upload de arquivo falhou." });
@@ -82,6 +81,7 @@ router.post(
   "/activities",
   isAuthenticated,
   attachCurrentUser,
+  isAdmin,
   async (req, res) => {
     try {
       // Extrair as informações do corpo da requisição
@@ -106,6 +106,7 @@ router.patch(
   "/activities/:id",
   isAuthenticated,
   attachCurrentUser,
+  isAdmin,
   async (req, res) => {
     console.log(req.headers);
 
