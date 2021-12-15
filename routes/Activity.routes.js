@@ -3,6 +3,24 @@ const router = require("express").Router();
 const ActivityModel = require("../models/Activity.model");
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
+const isAdmin = require("../middlewares/isAdmin");
+
+const uploader = require("../config/cloudinary.config");
+
+router.post(
+  "/upload",
+  isAuthenticated,
+  uploader.single("media"),
+  (req, res) => {
+    if (!req.file) {
+      return res.status(500).json({ msg: "Upload de arquivo falhou." });
+    }
+
+    console.log(req.file);
+
+    return res.status(201).json({ url: req.file.path });
+  }
+);
 
 // cRud (READ) - HTTP GET
 // Buscar todas as atividades
@@ -10,6 +28,7 @@ router.get(
   "/activities",
   isAuthenticated,
   attachCurrentUser,
+  isAdmin,
   async (req, res) => {
     console.log(req.headers);
 
@@ -48,7 +67,7 @@ router.get(
           .status(200)
           .json(await ActivityModel.findOne({ _id: req.params.id }));
       } else {
-        return res.status(404).json({ msg: "Activity not found." });
+        return res.status(404).json({ msg: "Não encontramos a atividade." });
       }
     } catch (err) {
       console.error(err);
@@ -58,29 +77,36 @@ router.get(
 );
 
 // Cria uma atividade nova
-router.post("/activities", isAuthenticated, async (req, res) => {
-  try {
-    // Extrair as informações do corpo da requisição
+router.post(
+  "/activities",
+  isAuthenticated,
+  attachCurrentUser,
+  isAdmin,
+  async (req, res) => {
+    try {
+      // Extrair as informações do corpo da requisição
 
-    console.log(req.body);
+      console.log(req.body);
 
-    // Inserir no banco
-    const result = await ActivityModel.create(req.body);
+      // Inserir no banco
+      const result = await ActivityModel.create(req.body);
 
-    // Responder a requisição
-    // Pela regra do REST, a resposta de uma inserção deve contar o registro recém-inserido com status 201
-    res.status(201).json(result);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
+      // Responder a requisição
+      // Pela regra do REST, a resposta de uma inserção deve contar o registro recém-inserido com status 201
+      res.status(201).json(result);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
   }
-});
+);
 
 // Edita uma atividade específica
 router.patch(
   "/activities/:id",
   isAuthenticated,
   attachCurrentUser,
+  isAdmin,
   async (req, res) => {
     console.log(req.headers);
 
@@ -95,7 +121,7 @@ router.patch(
       );
 
       if (!result) {
-        res.status(404).json({ msg: "Activity not found." });
+        res.status(404).json({ msg: "Atividade não encontrada." });
       }
 
       // Responder o cliente com os dados da atividade. O status 200 significa OK
@@ -113,7 +139,7 @@ router.delete("/activities/:id", async (req, res) => {
     const result = await ActivityModel.deleteOne({ _id: req.params.id });
 
     if (result.deletedCount < 1) {
-      return res.status(404).json({ msg: "Activity not found." });
+      return res.status(404).json({ msg: "Atividade não encontrada." });
     }
 
     res.status(200).json(result);
