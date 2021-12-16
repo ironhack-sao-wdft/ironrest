@@ -28,7 +28,6 @@ router.get(
   "/activities",
   isAuthenticated,
   attachCurrentUser,
-  isAdmin,
   async (req, res) => {
     console.log(req.headers);
 
