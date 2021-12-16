@@ -119,4 +119,35 @@ router.get("/profile", isAuthenticated, attachCurrentUser, (req, res) => {
   }
 });
 
+// Edita um usuário específico
+router.patch(
+  "/profile/:id",
+  isAuthenticated,
+  attachCurrentUser,
+  async (req, res) => {
+    console.log(req.headers);
+
+    try {
+      // Buscar o usuário logado que está disponível através do middleware attachCurrentUser
+      const loggedInUser = req.currentUser;
+
+      const result = await UserModel.findOneAndUpdate(
+        { _id: req.params.id },
+        { $set: req.body },
+        { new: true, runValidators: true }
+      );
+
+      if (!result) {
+        res.status(404).json({ msg: "User not found." });
+      }
+
+      // Responder o cliente com os dados do usuário. O status 200 significa OK
+      return res.status(200).json(result);
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ msg: JSON.stringify(err) });
+    }
+  }
+);
+
 module.exports = router;
