@@ -152,4 +152,33 @@ router.patch(
   }
 );
 
+// Apaga uma atividade específica da array de bloqueadas
+
+router.patch("/profile/g/:id"),
+  isAuthenticated,
+  attachCurrentUser,
+  async (req, res) => {
+    console.log(req.headers);
+
+    try {
+      // Buscar o usuário logado que está disponível através do middleware attachCurrentUser
+      const loggedInUser = req.currentUser;
+
+      const result = await UserModel.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          $pull: { blockedActivities: { _id: req.body.blockedActivities } },
+        },
+
+        { new: true, runValidators: true }
+      );
+
+      if (!result) {
+        res.status(404).json({ msg: "User not found." });
+      }
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ msg: JSON.stringify(err) });
+    }
+  };
 module.exports = router;
