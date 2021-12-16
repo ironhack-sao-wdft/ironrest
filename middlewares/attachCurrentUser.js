@@ -10,6 +10,12 @@ module.exports = async (req, res, next) => {
       { passwordHash: 0, __v: 0 } // Excluindo o hash da senha da resposta que vai pro servidor, por segurança
     );
 
+    await user.populate([
+      "blockedActivities",
+      "favorites",
+      "publishedActivities",
+    ]);
+
     if (!user) {
       // 400 significa Bad Request
       return res.status(400).json({ msg: "Usuário não existe." });
