@@ -101,7 +101,8 @@ router.post("/login", async (req, res) => {
 
 // cRud (READ) - HTTP GET
 // Buscar dados do usuário
-router.get("/profile", isAuthenticated, attachCurrentUser, (req, res) => {
+
+router.get("/profile", isAuthenticated, attachCurrentUser, async (req, res) => {
   console.log(req.headers);
 
   try {

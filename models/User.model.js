@@ -17,8 +17,8 @@ const UserSchema = new Schema({
     required: true,
     default: "USER",
   },
-  favorites: [{ type: String }],
-  blockedActivities: [{ type: String }],
+  favorites: [{ type: mongoose.Types.ObjectId, ref: "Activity" }],
+  blockedActivities: [{ type: mongoose.Types.ObjectId, ref: "Activity" }],
   publishedActivities: [{ type: mongoose.Types.ObjectId, ref: "Activity" }],
   pictureURL: {
     type: String,
