@@ -113,7 +113,7 @@ router.patch(
       // Buscar o usuário logado que está disponível através do middleware attachCurrentUser
       const loggedInUser = req.currentUser;
 
-      const result = await ActivityModel.findOne(
+      const result = await ActivityModel.findOneAndUpdate(
         { _id: req.params.id },
         { $set: req.body },
         { new: true, runValidators: true }
