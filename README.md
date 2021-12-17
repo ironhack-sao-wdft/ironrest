@@ -2,7 +2,7 @@
 
 Link: https://pause-ironhack.netlify.app/
 
-A digital mobile website for short-timed wellness activities. Developed by Igor Stefano (https://github.com/IgStefano/) and William Galvão (https://github.com/William-Galvao/). UX Design by Romy von Erlea (https://www.linkedin.com/in/romyvonerlea), Bianca Harari, Mayra Lima (https://www.linkedin.com/in/mayra-alves-lima/) and Rebeca Cortez (https://github.com/rebecacortez). It was developed in just over one week as the final project of the Ironhack Web Development Bootcamp in December 2021.
+A digital mobile website for short-timed wellness activities. Developed by Igor Stefano (https://github.com/IgStefano/) and William Galvão (https://github.com/William-Galvao/). UX Design by Romy von Erlea (https://www.linkedin.com/in/romyvonerlea), Bianca Harari (https://www.linkedin.com/in/bianca-harari-b3b42828/), Mayra Lima (https://www.linkedin.com/in/mayra-alves-lima/) and Rebeca Cortez (https://github.com/rebecacortez). It was developed in just over one week as the final project of the Ironhack Web Development Bootcamp in December 2021.
 
 ## Technical Details
 
