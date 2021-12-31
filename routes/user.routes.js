@@ -2,10 +2,14 @@ const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 
 const UserModel = require("../models/User.model");
+
+
+//variaveis exportadas dos arquivos de geração de token, autenticação e administrador. 
 const generateToken = require("../config/jwt.config");
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
 
+// força do salt.
 const salt_rounds = 10;
 
 // Crud (CREATE) - HTTP POST
