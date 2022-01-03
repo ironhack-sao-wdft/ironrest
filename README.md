@@ -1,59 +1,29 @@
-![logo_ironhack_blue 7](https://user-images.githubusercontent.com/23629340/40541063-a07a0a8a-601a-11e8-91b5-2f13e4e6b441.png)
+# PAUSE
 
-# IronREST Boilerplate
+Link: https://pause-ironhack.netlify.app/
 
-Esse boilerplate para API RESTful já inclui:
+A digital mobile website for short-timed wellness activities. Developed by Igor Stefano (https://github.com/IgStefano/) and William Galvão (https://github.com/William-Galvao/). UX Design by Romy von Erlea (https://www.linkedin.com/in/romyvonerlea), Bianca Harari (https://www.linkedin.com/in/bianca-harari-b3b42828/), Mayra Lima (https://www.linkedin.com/in/mayra-alves-lima/) and Rebeca Cortez (https://github.com/rebecacortez). It was developed in just over one week as the final project of the Ironhack Web Development Bootcamp in December 2021.
 
-- Autenticação por tokens JWT usando o Passport
-- Conexão com banco de dados MongoDB usando Mongoose
-- Servidor Web usando Express pré-configurado com CORS e aceitando requisições JSON e Multipart Form
-- Upload de arquivos usando Cloudinary e Multer
+## Technical Details
 
-## Para Começar
+PAUSE is a full-stack web application. Its repositories can be found here: https://github.com/William-Galvao/ironrest (back-end) and here: https://github.com/William-Galvao/react-ironplate (front-end). It was fully developed using JavaScript and its frameworks. React for the front-end, while Express handled the back. MongoDB was used as a database, completing the so-called MERN stack.
 
-- Faça o fork e clone deste repositório
+## What Is PAUSE?
 
-## Instalação
+PAUSE was born out of a concern about wellness - mental and physical - as the effects of the pandemic started to branch out beyond the risk of the virus itself. After researching about consumer habits and wishes, the concept of an app that would ease the pains of practicing activities focused on well-being.
 
-```shell
-$ npm install
-```
+PAUSE gives you daily suggestions of short activities - both mental and physical, both indoors and outdoors - so that the user can feel empowered and, at the same time, encouraged to pursue their own wellness, one PAUSE at a time.
 
-> :warning: **IMPORTANTE**: O arquivo `.env` está comentado no `.gitignore` por motivos didáticos. Antes de fazer seu primeiro commit, retire o comentário (`#`) do `.gitignore` na linha onde está escrito `.env` e execute o seguinte comando (esse comando deleta o arquivo do histórico de commits do Git):
+## How to Use It
 
-```shell
-$ git rm -r --cached
-```
+Any user can sign-up for a free account and immediately start accessing PAUSE's activities. It goes like this:
 
-## Desenvolvimento
+1. Create an account and log-in PAUSE's website;
+   1.1) Press the icon in the top-left corner to access your profile and upload a picture of yourself (optional);
+2. Select whether you want indoors or outdoors activities;
+3. Choose one of the three options we chose for you;
+4. Follow the instructions and leave a feedback to let us know how you liked it!
 
-Para iniciar o servidor web localmente execute no seu terminal:
+## Special Thanks
 
-```shell
-$ npm run dev
-```
-
-## Deploy do MongoDB
-
-1. Faça login no https://account.mongodb.com/account/login?nds=true
-2. Crie um cluster gratuito
-3. Siga as instruções e obtenha a string de conexão com o banco
-4. Crie uma variável de ambiente MONGODB_URI no Heroku com a string de conexão copiada do Atlas
-
-## Deploy no Heroku
-
-1. Faça login no Heroku e selecione seu repositório
-2. Habilite 'automatic deploys'
-3. No seu terminal, execute os seguintes comandos:
-
-```shell
-$ git add .
-$ git commit -m 'deploying'
-$ heroku git:remote -a nome-do-repo-no-heroku
-$ git push heroku master
-```
-
-4. Adicione uma variável de ambiente no Heroku para cada variável de ambiente presente no arquivo .env (não precisa criar a PORT no Heroku)
-5. Adicione a URL da sua API hospedada no Heroku nas variáveis de ambiente do app React no Netlify
-
-Happy coding! 💙
+We would like to thank everyone at the Ironhack Teaching Team for basically making this possible. We would also like to thank our families for not giving up on us during the seemingly unending final week of the bootcamp. Last but not least, thank you for reading until the end. We hope you enjoy your PAUSE.

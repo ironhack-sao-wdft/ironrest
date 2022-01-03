@@ -22,7 +22,7 @@ router.post("/signup", async (req, res) => {
     if (
       !password ||
       !password.match(
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/gm
       )
     ) {
       // O código 400 significa Bad Request
@@ -82,6 +82,10 @@ router.post("/login", async (req, res) => {
           email: user.email,
           _id: user._id,
           role: user.role,
+          favorites: user.favorites,
+          blockedActivities: user.blockedActivities,
+          publishedActivities: user.publishedActivities,
+          pictureURL: user.pictureURL,
         },
         token,
       });
@@ -97,7 +101,8 @@ router.post("/login", async (req, res) => {
 
 // cRud (READ) - HTTP GET
 // Buscar dados do usuário
-router.get("/profile", isAuthenticated, attachCurrentUser, (req, res) => {
+
+router.get("/profile", isAuthenticated, attachCurrentUser, async (req, res) => {
   console.log(req.headers);
 
   try {
@@ -116,4 +121,64 @@ router.get("/profile", isAuthenticated, attachCurrentUser, (req, res) => {
   }
 });
 
+// Edita um usuário específico
+router.patch(
+  "/profile/:id",
+  isAuthenticated,
+  attachCurrentUser,
+  async (req, res) => {
+    console.log(req.headers);
+
+    try {
+      // Buscar o usuário logado que está disponível através do middleware attachCurrentUser
+      const loggedInUser = req.currentUser;
+
+      const result = await UserModel.findOneAndUpdate(
+        { _id: req.params.id },
+        { $set: req.body },
+        { new: true, runValidators: true }
+      );
+
+      if (!result) {
+        res.status(404).json({ msg: "User not found." });
+      }
+
+      // Responder o cliente com os dados do usuário. O status 200 significa OK
+      return res.status(200).json(result);
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ msg: JSON.stringify(err) });
+    }
+  }
+);
+
+// Apaga uma atividade específica da array de bloqueadas
+
+router.patch("/profile/g/:id"),
+  isAuthenticated,
+  attachCurrentUser,
+  async (req, res) => {
+    console.log(req.headers);
+
+    try {
+      // Buscar o usuário logado que está disponível através do middleware attachCurrentUser
+      const loggedInUser = req.currentUser;
+
+      const result = await UserModel.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          $pull: { blockedActivities: { _id: req.body.blockedActivities } },
+        },
+
+        { new: true, runValidators: true }
+      );
+
+      if (!result) {
+        res.status(404).json({ msg: "User not found." });
+      }
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ msg: JSON.stringify(err) });
+    }
+  };
 module.exports = router;
