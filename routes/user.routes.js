@@ -22,7 +22,7 @@ router.post("/signup", async (req, res) => {
     if (
       !password ||
       !password.match(
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/gm
       )
     ) {
       // O código 400 significa Bad Request
