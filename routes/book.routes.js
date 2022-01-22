@@ -7,6 +7,9 @@ const router = express.Router();
 // importar o modelo do book
 const BookModel = require("../models/Book.model");
 
+//Importar o modelo de usuários.
+const Usermodel = require("../models/User.model");
+
 //Importar instância do multer que faz os uploads
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
@@ -14,7 +17,7 @@ const uploader = require("../config/cloudinary.config");
 
 // cRud Read (GET) (Cadastro)
 router.post(
-  "/cadastro",
+  "/register",
   isAuthenticated,
   attachCurrentUser,
   async (req, res) => {
@@ -35,7 +38,7 @@ router.post(
 
 // cRud Read (GET) (Lista)
 
-router.get("/lista", async (req, res) => {
+router.get("/list", async (req, res) => {
   try {
     // Buscar as informações no banco
     const books = await BookModel.find();
@@ -50,7 +53,7 @@ router.get("/lista", async (req, res) => {
 
 // cRud Read (GET) (Detalhe)
 
-router.get("/detalhes/:id", async (req, res) => {
+router.get("/detail/:id", async (req, res) => {
   try {
     // Buscar as informações no banco
     const book = await BookModel.findOne({ _id: req.params.id });

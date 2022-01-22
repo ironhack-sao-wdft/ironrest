@@ -9,7 +9,6 @@ const BookSchema = new Schema({
   author: {
     type: String,
     required: true,
-    trim: true,
   },
   synopsis: {
     type: String,
@@ -26,6 +25,7 @@ const BookSchema = new Schema({
     default:
       "https://www.shortandtweet.com/images/short-and-tweet-default-book-cover.jpg",
   },
+  userId: {type: String}
 });
 
 const BookModel = model("Book", BookSchema);
