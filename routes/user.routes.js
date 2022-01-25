@@ -67,7 +67,7 @@ router.post("/login", async (req, res) => {
     if (!user) {
       return res
         .status(400)
-        .json({ msg: "This email is not yet registered in our website;" });
+        .json({ msg: "Este e-mail ainda não está cadastrado em nosso site!" });
     }
 
     // Verificar se a senha do usuário pesquisado bate com a senha recebida pelo formulário

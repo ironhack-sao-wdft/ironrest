@@ -23,7 +23,7 @@ const BookSchema = new Schema({
   coverImage: {
     type: String,
     default:
-      "https://www.shortandtweet.com/images/short-and-tweet-default-book-cover.jpg",
+      "https://img.elo7.com.br/product/zoom/308AD56/quadro-dark-capa-do-livro-da-serie-23x31cm-varias-cores-poster.jpg",
   },
   userId: {type: String}
 });

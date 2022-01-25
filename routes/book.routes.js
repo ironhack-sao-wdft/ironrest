@@ -15,9 +15,9 @@ const isAuthenticated = require("../middlewares/isAuthenticated");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
 const uploader = require("../config/cloudinary.config");
 
-// cRud Read (GET) (Cadastro)
+// cRud Read (POST) (Cadastro)
 router.post(
-  "/register",
+  "/Bookcreate",
   isAuthenticated,
   attachCurrentUser,
   async (req, res) => {
@@ -38,7 +38,7 @@ router.post(
 
 // cRud Read (GET) (Lista)
 
-router.get("/list", async (req, res) => {
+router.get("/list-book", async (req, res) => {
   try {
     // Buscar as informações no banco
     const books = await BookModel.find();
@@ -53,14 +53,14 @@ router.get("/list", async (req, res) => {
 
 // cRud Read (GET) (Detalhe)
 
-router.get("/detail/:id", async (req, res) => {
+router.get("/detail-book/:id", async (req, res) => {
   try {
     // Buscar as informações no banco
     const book = await BookModel.findOne({ _id: req.params.id });
 
     // Verificar se o banco encontrou o produto
     if (!book) {
-      return res.status(404).json({ msg: "Livro não encontrado :(" });
+      return res.status(404).json({ msg: "Livros não encontrado :(" });
     }
 
     // Responder a requisição
@@ -77,13 +77,12 @@ router.get("/detail/:id", async (req, res) => {
 // crUd Update (PATCH) atualizar livros
 
 router.patch(
-  "/update/:id",
+  "/update-book/:id",
   isAuthenticated,
   attachCurrentUser,
   async (req, res) => {
     try {
-      // Atualizar o registro
-      const bookUpdate = await BookModel.findOneAndUpdate(
+      const book = await BookModel.findOneAndUpdate(
         { _id: req.params.id },
         { $set: req.body },
         { new: true, runValidators: true }
@@ -94,7 +93,7 @@ router.patch(
       }
 
       // Responder a requisição
-      res.status(200).json(bookUpdate);
+      res.status(200).json(BookUpdate);
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
@@ -105,12 +104,13 @@ router.patch(
 // cruD Delete (DELETE)
 
 router.delete(
-  "/delete/:id",
+  "/delete-book/:id",
   isAuthenticated,
   attachCurrentUser,
   async (req, res) => {
     try {
-      const deleteBook = await BookModel.deleteOne({ _id: req.params.id });
+      const book = await BookModel.findOne({ _id: req.params.id });
+      const deleteBook = await BookModel.deleteOne({ _id: req.params.id })
 
       if (deleteBook.deletedCount < 1) {
         return res.status(404).json({ msg: "Livro não encontrado :(" });
