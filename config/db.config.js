@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 async function connect() {
   try {
-    // Não esquecer de criar variável de ambiente com endereço do seu servidor Mongo local em desenvolvimento, e o endereço do cluster do Atlas em produção
+    //const MONGODB_URI = `mongodb://localhost:27017/EXP`
     const connection = await mongoose.connect(process.env.MONGODB_URI, {
       useCreateIndex: true,
       useNewUrlParser: true,
