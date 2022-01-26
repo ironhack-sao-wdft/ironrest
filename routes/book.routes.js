@@ -71,9 +71,6 @@ router.get("/detail-book/:id", async (req, res) => {
   }
 });
 
-// PUT => substituição (destrutiva)
-// PATCH => atualização (não-destrutiva)
-
 // crUd Update (PATCH) atualizar livros
 
 router.patch(
