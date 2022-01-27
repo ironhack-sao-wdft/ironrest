@@ -13,7 +13,7 @@ const UserModel = require("../models/User.model");
 //Importar instância do multer que faz os uploads
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
-const upload = require("../config/cloudinary.config");
+const uploader = require("../config/cloudinary.config");
 
 // cRud Read (POST) (Cadastro)
 router.post(
@@ -126,8 +126,8 @@ router.delete(
 // Upload de arquivos no Cloudinary
 router.post(
   "/upload",
-  isAuthenticated,
-  upload.single("picture"),
+  
+  uploader.single("picture"),
   (req, res) => {
     if (!req.file) {
       return res.status(500).json({ msg: "Upload de arquivo falhou" });
