@@ -60,7 +60,7 @@ router.get("/detail-book/:id", async (req, res) => {
 
     // Verificar se o banco encontrou o produto
     if (!book) {
-      return res.status(404).json({ msg: "Livros não encontrado :(" });
+      return res.status(404).json({ msg: "Livros não encontrado" });
     }
 
     // Responder a requisição
@@ -79,16 +79,17 @@ router.patch(
   attachCurrentUser,
   async (req, res) => {
     try {
-      const book = await BookModel.findOneAndUpdate(
+      const book = await BookModel.findOne({ _id: req.params.id });
+       
+      if (!book) {
+        return res.status(404).json({ msg: "Livro não encontrado" });
+      }
+
+      const BookUpdate = await BookModel.findOneAndUpdate(
         { _id: req.params.id },
         { $set: req.body },
         { new: true, runValidators: true }
       );
-
-      if (!book) {
-        return res.status(404).json({ msg: "Livro não encontrado :(" });
-      }
-
       // Responder a requisição
       res.status(200).json(BookUpdate);
     } catch (err) {
@@ -110,7 +111,7 @@ router.delete(
       const deleteBook = await BookModel.deleteOne({ _id: req.params.id })
 
       if (deleteBook.deletedCount < 1) {
-        return res.status(404).json({ msg: "Livro não encontrado :(" });
+        return res.status(404).json({ msg: "Livro não encontrado" });
       }
 
       // Pela regra do REST, deleções devem retornar um objeto vazio
@@ -129,7 +130,7 @@ router.post(
   uploader.single("picture"),
   (req, res) => {
     if (!req.file) {
-      return res.status(500).json({ msg: "Upload de arquivo falhou :(" });
+      return res.status(500).json({ msg: "Upload de arquivo falhou" });
     }
 
     console.log(req.file);
