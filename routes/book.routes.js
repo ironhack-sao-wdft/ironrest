@@ -8,12 +8,12 @@ const router = express.Router();
 const BookModel = require("../models/Book.model");
 
 //Importar o modelo de usuários.
-const Usermodel = require("../models/User.model");
+const UserModel = require("../models/User.model");
 
 //Importar instância do multer que faz os uploads
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
-const uploader = require("../config/cloudinary.config");
+const upload = require("../config/cloudinary.config");
 
 // cRud Read (POST) (Cadastro)
 router.post(
@@ -127,7 +127,7 @@ router.delete(
 router.post(
   "/upload",
   isAuthenticated,
-  uploader.single("picture"),
+  upload.single("picture"),
   (req, res) => {
     if (!req.file) {
       return res.status(500).json({ msg: "Upload de arquivo falhou" });

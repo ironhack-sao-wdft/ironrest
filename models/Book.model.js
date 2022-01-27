@@ -23,7 +23,7 @@ const BookSchema = new Schema({
   coverImage: {
     type: String,
     default:
-      "https://www.shortandtweet.com/images/short-and-tweet-default-book-cover.jpg",
+      "https://images-na.ssl-images-amazon.com/images/I/51HoWoBwwBL._SX346_BO1,204,203,200_.jpg",
   },
   userId: {type: String}
 });
