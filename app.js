@@ -12,7 +12,11 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 // Não esquecer de criar variável de ambiente com o endereço do seu app React (local ou deployado no Netlify)
-app.use(cors({ origin: "*"}));
+app.use(
+  cors({
+    origin: process.env.REACT_APP_URL, // NÃO PODE TER BARRA NO FINAL!!!!!
+  })
+);
 
 const userRouter = require("./routes/user.routes");
 
