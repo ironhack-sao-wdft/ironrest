@@ -1,5 +1,16 @@
 const router = require("express").Router();
 const BookModel = require("../models/Book.model");
+const uploader = require('../config/cloudinary.config')
+
+
+router.post('/upload', uploader.single("picture"), (req, res) => {
+  if (!req.file) {
+    return res.status(500).json({msg: 'Upload de arquivos falhou'})
+  }
+  console.log(req.file)
+
+  return res.status(201).json({url: req.file.path})
+})
 
 // Crud (CREATE) - HTTP POST
 // Criar um novo livro

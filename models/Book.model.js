@@ -4,10 +4,10 @@ const BookSchema = new Schema({
   title: { type: String, required: true },
   author: { type: String, required: true },
   synopsis: { type: String },
-  releaseYear: {type: Number, required: true},
+  year: {type: Number},
   genre: { type: String },
-  coverImage: {
-      type: String, default: 'https://www.shortandtweet.com/images/short-and-tweet-default-book-cover.jpg'
+  pictures: {
+      type: String, default: 'https://www.shortandtweet.com/images/short-and-tweet-default-book-cover.jpg', trim: true,
   },
   userId: {type:String}
 });
