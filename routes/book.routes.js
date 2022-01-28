@@ -22,6 +22,8 @@ const jsonParser = bodyParser.json();
 //Só gera cadastro se estiver logado
 router.post(
   "/create-book",
+  isAuthenticated,
+  attachCurrentUser,
 
   async (req, res) => {
     try {
@@ -40,7 +42,7 @@ router.post(
 //Busca lista completa dos livros  (exibe apenas se estiver logado)
 router.get("/list-book", async (req, res) => {
   try {
-    const books = await BookModel.find();
+    const books = await BookModel.find({});
 
     res.status(200).json(books);
   } catch (err) {
