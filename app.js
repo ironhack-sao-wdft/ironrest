@@ -27,6 +27,5 @@ app.use("/api", userRouter);
 const bookRoutes  = require("./routes/Book.routes");
 app.use("/api", bookRoutes);
 app.listen(Number(process.env.PORT), () =>
-  console.log(`Server up and running at port ${process.env.PORT}`),
-  console.log (process.env.REACT_APP_URL)
+  console.log(`Server up and running at port ${process.env.PORT}`)
 );
