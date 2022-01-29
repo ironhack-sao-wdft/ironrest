@@ -27,7 +27,8 @@
     "multer": "^1.4.4",
     "multer-storage-cloudinary": "^4.0.0",
     "react-scripts": "^5.0.0",
-    "yarn": "^1.22.17"
+    "yarn": "^1.22.17",
+    "yarn.lock": "0.0.1-security"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
