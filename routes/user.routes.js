@@ -16,7 +16,7 @@ router.post("/signup", async (req, res) => {
 
   try {
     // Recuperar a senha que está vindo do corpo da requisição
-    const { name, email, password } = req.body;
+    const { password } = req.body;
 
     // Verifica se a senha não está em branco ou se a senha não é complexa o suficiente
     if (
