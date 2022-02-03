@@ -1,6 +1,8 @@
 <h1>Book App 📚</h1>
 <h2>Demonstração 🎬<h2>
-
+<h1 align="center">
+  <img alt="Gif" title="Readme" src="./github/gifs-book.gif" />
+  </h1>
 <h1>Sobre o Projeto</h1>
 <p>Book App é um site que permite aos usuários cadastrar seus favoritos livros, desenvolvido para prática FullStack do curso de Desenvolvimento Web da IronHack - SP.</p>
   <p>Link do <b>Site</b> ▶️ <a href="https://may-book.netlify.app/login">Book-App</a></p>
