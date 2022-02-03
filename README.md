@@ -14,6 +14,7 @@
   As seguites ferramentas que foram usadas na contrução do projeto:
   - [JavaScript](https://pt.wikipedia.org/wiki/JavaScript)
   - [CSS](https://pt.wikipedia.org/wiki/Cascading_Style_Sheets)
+  - [HTML](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
   - [React](https://pt-br.reactjs.org/)
   - [NodeJS](https://nodejs.org/en/)
   - [Express](https://expressjs.com/pt-br/)
