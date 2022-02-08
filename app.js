@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
 // Não esquecer de criar variável de ambiente com o endereço do seu app React (local ou deployado no Netlify)
-app.use(cors({ origin: "https://booksregister.herokuapp.com/api" }));
+app.use(cors({ origin: "*" }));
 
 const userRouter = require("./routes/user.routes");
 app.use("/api", userRouter);
