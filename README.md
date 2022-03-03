@@ -22,7 +22,7 @@ $ npm install
 > :warning: **IMPORTANTE**: O arquivo `.env` está comentado no `.gitignore` por motivos didáticos. Antes de fazer seu primeiro commit, retire o comentário (`#`) do `.gitignore` na linha onde está escrito `.env` e execute o seguinte comando (esse comando deleta o arquivo do histórico de commits do Git):
 
 ```shell
-$ git rm -r --cached
+$ git rm -r --cached .env
 ```
 
 ## Desenvolvimento
