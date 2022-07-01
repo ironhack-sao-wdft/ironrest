@@ -4,7 +4,7 @@
   <img alt="Gif" title="Readme" src="./github/gifs-book.gif"/>
   </h1>
 <h1>Sobre o Projeto</h1>
-<p>Book App é um site que permite aos usuários cadastrar seus livros favoritos, desenvolvi essa aplicação para praticar CRUD tanto no back-end quanto no front-end, desafio no formato solo, sem suporte técnico adicional.</p>
+<p>Book App é um site que permite os usuários cadastrar seus livros favoritos é uma única página web, desenvolvi esse site para praticar CRUD (acrónimo do inglês Create, Read, Update and Delete) são as quatro operações básicas (criação, consulta, atualização e destruição de dados) utilizadas em bases de dados relacionais tanto no back-end quanto no front-end, desafio no formato solo, sem suporte técnico adicional.</p>
 <p>Curso: Desenvolvimento Web - <b>IronHack - SP</b></p>
   <p>Link do <b>Site</b> ▶️ <a href="https://may-book.netlify.app/login">Book-App</a></p>
   <p>Link do <b>Repositório Front-end</b> ▶️ <a href="https://github.com/Elizeu-Santos/react-ironplate">Front-end</a></p>
