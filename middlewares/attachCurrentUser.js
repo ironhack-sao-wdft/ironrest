@@ -19,6 +19,6 @@ module.exports = async (req, res, next) => {
     return next();
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ msg: JSON.stringify(err) });
+    return res.status(505).json({ msg: JSON.stringify(err) });
   }
 };

@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 const { Schema, model } = require("mongoose");
 
 const UserSchema = new Schema({
@@ -10,6 +12,8 @@ const UserSchema = new Schema({
     lowercase: true,
   },
   passwordHash: { type: String, required: true },
+  bookId: [{ type: mongoose.Types.ObjectId, ref: "Book" }],
+  userId: { type: String },
   role: {
     type: String,
     enum: ["ADMIN", "USER"],
