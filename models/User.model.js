@@ -1,7 +1,8 @@
 const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
 const UserSchema = new Schema({
-  name: { type: String, required: true, trim: true },
+  name: { type: String, required: true, trim: true, maxLength: 46 },
   email: {
     type: String,
     required: true,
@@ -15,6 +16,15 @@ const UserSchema = new Schema({
     enum: ["ADMIN", "USER"],
     required: true,
     default: "USER",
+  },
+  favorites: [{ type: mongoose.Types.ObjectId, ref: "Activity" }],
+  blockedActivities: [{ type: mongoose.Types.ObjectId, ref: "Activity" }],
+  publishedActivities: [{ type: mongoose.Types.ObjectId, ref: "Activity" }],
+  pictureURL: {
+    type: String,
+    trim: true,
+    default:
+      "https://res.cloudinary.com/dabmc9zrm/image/upload/v1639657132/pause/logo_qah10p.png",
   },
 });
 
