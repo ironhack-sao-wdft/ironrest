@@ -1,4 +1,4 @@
 node_modules/
 package-lock.json
 # IMPORTANTE!!! O .env está comentado por questões didáticas, descomentar antes de fazer o primeiro commit!!!!
-# .env
+.env
